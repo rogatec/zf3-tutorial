@@ -24,8 +24,6 @@ return [
                 'driver_options' => [
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 ],
-                'username' => 'root',
-                'password' => 'superuser',
             ],
             'db2' => [
                 'driver' => 'Pdo',
@@ -33,8 +31,6 @@ return [
                 'driver_options' => [
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 ],
-                'username' => 'root',
-                'password' => 'superuser',
             ],
         ],
     ],
