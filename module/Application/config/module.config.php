@@ -7,6 +7,7 @@
 
 namespace Application;
 
+use Album\Controller\AlbumController;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
@@ -24,6 +25,17 @@ return [
                     ],
                 ],
             ],
+            'sv' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/sv',
+                    'defaults' => [
+                        'controller' => AlbumController::class,
+                        'action'     => 'goto',
+                    ],
+                ],
+            ],
+            
             'application' => [
                 'type'    => Segment::class,
                 'options' => [

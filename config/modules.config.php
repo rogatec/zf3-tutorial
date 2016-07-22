@@ -26,4 +26,5 @@ return [
     'Zend\Validator',
     'Application',
     'Album',
+    'Abavo',
 ];

@@ -12,7 +12,9 @@
 namespace Album\Controller;
 
 
+use Abavo\Controller\Plugin\ConfigLoaderPlugin;
 use Album\Model\AlbumTable;
+use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -33,6 +35,14 @@ class AlbumController extends AbstractActionController
         return new ViewModel([
             'albums' => $this->table->fetchAll(),
         ]);
+    }
+    
+    public function gotoAction()
+    {
+        /** @var ConfigLoaderPlugin $cfg */
+        $cfg = $this->plugin(ConfigLoaderPlugin::class);
+    
+        return $this->redirect()->toUrl($cfg->getValue('sv_url'));
     }
     
     public function addAction()
