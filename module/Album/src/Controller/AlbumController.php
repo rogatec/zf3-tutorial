@@ -14,6 +14,9 @@ namespace Album\Controller;
 
 use Abavo\Controller\Plugin\ConfigLoaderPlugin;
 use Album\Model\AlbumTable;
+use Zend\Db\Adapter\Adapter;
+use Zend\Db\Sql\Sql;
+use Zend\Debug\Debug;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -24,9 +27,15 @@ class AlbumController extends AbstractActionController
      */
     private $table;
     
-    public function __construct(AlbumTable $table)
+    /**
+     * @var Adapter
+     */
+    private $svAdapter;
+    
+    public function __construct(AlbumTable $table, Adapter $svAdapter)
     {
         $this->table = $table;
+        $this->svAdapter = $svAdapter;
     }
     
     public function indexAction()
@@ -38,6 +47,15 @@ class AlbumController extends AbstractActionController
     
     public function gotoAction()
     {
+        // second adapter
+//        $db = new Sql($this->svAdapter);
+//        $select = $db->select('projects');
+//        $select->where(['id' => 139]);
+//        $stmt   = $db->prepareStatementForSqlObject($select);
+//        $result = $stmt->execute();
+//
+//        Debug::dump($result->current());die();
+        
         /** @var ConfigLoaderPlugin $cfg */
         $cfg = $this->plugin(ConfigLoaderPlugin::class);
 
