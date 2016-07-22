@@ -1,9 +1,9 @@
 <?php
 /**
- * zf3 - AlbumTableFactory.php.
+ * zf3 - AlbumControllerFactory.php.
  *
  * @author: Timon Eckert <timon.eckert@abavo.de>
- * @since: 22.07.2016 - 08:54
+ * @since: 22.07.2016 - 13:24
  *
  * @copyright: since 2016 - abavo GmbH <info@abavo.de>
  * @license: Proprietary
@@ -12,15 +12,16 @@
 namespace Album\Factory;
 
 
+use Album\Controller\AlbumController;
 use Album\Model\AlbumTable;
-use Album\Model\AlbumTableGateway;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
+use Zend\Debug\Debug;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
-class AlbumTableFactory implements FactoryInterface
+class AlbumControllerFactory implements FactoryInterface
 {
     
     /**
@@ -37,8 +38,15 @@ class AlbumTableFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $tableGateway = $container->get(AlbumTableGateway::class);
+        $albumTable = $container->get(AlbumTable::class);
+        $svAdapter = $container->get('sv');
+        die("z");
+        $pvAdapter = $container->get('pv');
         
-        return new AlbumTable($tableGateway);
+        Debug::dump($svAdapter);
+        Debug::dump($pvAdapter);
+        die();
+        
+        return new AlbumController($albumTable, $svAdapter, $pvAdapter);
     }
 }

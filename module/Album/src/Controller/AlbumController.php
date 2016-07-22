@@ -14,7 +14,7 @@ namespace Album\Controller;
 
 use Abavo\Controller\Plugin\ConfigLoaderPlugin;
 use Album\Model\AlbumTable;
-use Zend\Debug\Debug;
+use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -25,9 +25,21 @@ class AlbumController extends AbstractActionController
      */
     private $table;
     
-    public function __construct(AlbumTable $table)
+    /**
+     * @var Adapter
+     */
+    private $svAdapter;
+    
+    /**
+     * @var Adapter
+     */
+    private  $pvAdapter;
+    
+    public function __construct(AlbumTable $table, $svAdapter, $pvAdapter)
     {
         $this->table = $table;
+        $this->svAdapter = $svAdapter;
+        $this->pvAdapter = $pvAdapter;
     }
     
     public function indexAction()

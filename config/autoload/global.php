@@ -16,10 +16,23 @@ use Abavo\Controller\Plugin\ConfigLoaderPlugin;
 
 return [
     'db' => [
-        'driver' => 'Pdo',
-        'dsn'    => 'mysql:dbname=u_teckert_zf3;host=localhost;charset=utf8',
-        'username' => 'teckert',
-        'password' => 'teckert'
+        'adapters' => [
+            'Application\Db\WriteAdapter' => [
+                'driver' => 'Pdo',
+                'dsn' => 'mysql:dbname=u_teckert_zf2;host=localhost',
+                'driver_options' => [
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+                ],
+                'username' => 'teckert',
+                'password' => 'teckert',
+            ],
+        ],
+    ],
+    
+    'service_manager' => [
+        'factories' => [
+            'Application\Db\WriteAdapter' => \Zend\Db\Adapter\AdapterAbstractServiceFactory::class,
+        ],
     ],
     
     'controller_plugins' => [

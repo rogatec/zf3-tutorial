@@ -1,27 +1,45 @@
 <?php
 /**
- * zf3 - AlbumControllerFactory.php.
+ * zf3 - SvDbAdapterFactory.php.
  *
  * @author: Timon Eckert <timon.eckert@abavo.de>
- * @since: 22.07.2016 - 09:40
+ * @since: 22.07.2016 - 14:40
  *
  * @copyright: since 2016 - abavo GmbH <info@abavo.de>
  * @license: Proprietary
  */
 
-namespace Album\Factory;
+namespace Album\Controller\Factory;
 
 
-use Album\Controller\AlbumController;
-use Album\Model\AlbumTable;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
+use Zend\Db\Adapter\Adapter;
+use Zend\Debug\Debug;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
-class AlbumControllerFactory implements FactoryInterface
+class SvDbAdapterFactory implements AbstractFactoryInterface
 {
+    
+    /**
+     * Can the factory create an instance for the service?
+     *
+     * @param  ContainerInterface $container
+     * @param  string $requestedName
+     * @return bool
+     */
+    public function canCreate(ContainerInterface $container, $requestedName)
+    {
+        Debug::dump($requestedName);die();
+        $config = $container->get('Config');
+        if (isset($config['db']['adapters'][$requestedName])) {
+            return true;
+        }
+        
+        return false;
+    }
     
     /**
      * Create an object
@@ -37,12 +55,8 @@ class AlbumControllerFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new AlbumController($container->get(AlbumTable::class));
+        $config = $container->get('Config');
+        
+        return new Adapter($config['db']['adapters'][$requestedName]);
     }
 }
-
-//    'controllers' => [
-//        'factories' => [
-//            AlbumController::class => AlbumControllerFactory::class,
-//        ],
-//    ],

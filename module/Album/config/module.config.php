@@ -12,6 +12,7 @@
 namespace Album;
 
 use Album\Controller\AlbumController;
+use Album\Factory\AlbumControllerFactory;
 use Album\Factory\AlbumTableFactory;
 use Album\Factory\AlbumTableGatewayFactory;
 use Album\Model\AlbumTable;
@@ -43,6 +44,12 @@ return [
         'factories' => [
             AlbumTable::class => AlbumTableFactory::class,
             AlbumTableGateway::class => AlbumTableGatewayFactory::class,
+        ],
+    ],
+    
+    'controllers' => [
+        'factories' => [
+            AlbumController::class => AlbumControllerFactory::class,
         ],
     ],
     
