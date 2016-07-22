@@ -14,7 +14,6 @@ namespace Album\Controller;
 
 use Abavo\Controller\Plugin\ConfigLoaderPlugin;
 use Album\Model\AlbumTable;
-use Zend\Db\Adapter\Adapter;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
@@ -25,21 +24,9 @@ class AlbumController extends AbstractActionController
      */
     private $table;
     
-    /**
-     * @var Adapter
-     */
-    private $svAdapter;
-    
-    /**
-     * @var Adapter
-     */
-    private  $pvAdapter;
-    
-    public function __construct(AlbumTable $table, $svAdapter, $pvAdapter)
+    public function __construct(AlbumTable $table)
     {
         $this->table = $table;
-        $this->svAdapter = $svAdapter;
-        $this->pvAdapter = $pvAdapter;
     }
     
     public function indexAction()
@@ -53,7 +40,7 @@ class AlbumController extends AbstractActionController
     {
         /** @var ConfigLoaderPlugin $cfg */
         $cfg = $this->plugin(ConfigLoaderPlugin::class);
-    
+
         return $this->redirect()->toUrl($cfg->getValue('sv_url'));
     }
     

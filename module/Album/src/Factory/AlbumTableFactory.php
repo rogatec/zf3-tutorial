@@ -12,15 +12,18 @@
 namespace Album\Factory;
 
 
+use Album\Model\Album;
 use Album\Model\AlbumTable;
 use Album\Model\AlbumTableGateway;
 use Interop\Container\ContainerInterface;
 use Interop\Container\Exception\ContainerException;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\Factory\FactoryInterface;
+use Zend\ServiceManager\Factory\AbstractFactoryInterface;
 
-class AlbumTableFactory implements FactoryInterface
+class AlbumTableFactory implements AbstractFactoryInterface
 {
     
     /**
@@ -37,8 +40,24 @@ class AlbumTableFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $tableGateway = $container->get(AlbumTableGateway::class);
+        $dbAdapter = $container->get('db1');
+        $resultSetPrototype = new ResultSet();
+        $resultSetPrototype->setArrayObjectPrototype(new Album());
+    
+        $tableGateway = new TableGateway('album', $dbAdapter, null, $resultSetPrototype);
         
         return new AlbumTable($tableGateway);
+    }
+    
+    /**
+     * Can the factory create an instance for the service?
+     *
+     * @param  ContainerInterface $container
+     * @param  string $requestedName
+     * @return bool
+     */
+    public function canCreate(ContainerInterface $container, $requestedName)
+    {
+        return in_array('Traversable', class_implements($requestedName), true);
     }
 }

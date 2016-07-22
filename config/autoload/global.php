@@ -13,25 +13,35 @@
 
 use Abavo\Controller\Factory\ConfigLoaderFactory;
 use Abavo\Controller\Plugin\ConfigLoaderPlugin;
+use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 
 return [
     'db' => [
         'adapters' => [
-            'Application\Db\WriteAdapter' => [
+            'db1' => [
                 'driver' => 'Pdo',
-                'dsn' => 'mysql:dbname=u_teckert_zf2;host=localhost',
+                'dsn' => 'mysql:dbname=zf3;host=localhost',
                 'driver_options' => [
                     PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
                 ],
-                'username' => 'teckert',
-                'password' => 'teckert',
+                'username' => 'root',
+                'password' => 'superuser',
+            ],
+            'db2' => [
+                'driver' => 'Pdo',
+                'dsn' => 'mysql:dbname=redmine;host=localhost',
+                'driver_options' => [
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+                ],
+                'username' => 'root',
+                'password' => 'superuser',
             ],
         ],
     ],
     
     'service_manager' => [
-        'factories' => [
-            'Application\Db\WriteAdapter' => \Zend\Db\Adapter\AdapterAbstractServiceFactory::class,
+        'abstract_factories' => [
+            AdapterAbstractServiceFactory::class,
         ],
     ],
     

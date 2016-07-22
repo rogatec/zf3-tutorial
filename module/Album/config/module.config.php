@@ -43,7 +43,6 @@ return [
     'service_manager' => [
         'factories' => [
             AlbumTable::class => AlbumTableFactory::class,
-            AlbumTableGateway::class => AlbumTableGatewayFactory::class,
         ],
     ],
     
