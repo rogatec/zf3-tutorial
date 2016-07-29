@@ -6,4 +6,7 @@ branches:
     only:
         - master
 
-before_script: cd zf3-tutorial
+env:
+  global:
+    - REPO="rogatec/zf3-tutorial"
+    - CI_HOME=`pwd`/$REPO
