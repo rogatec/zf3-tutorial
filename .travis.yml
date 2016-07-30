@@ -6,7 +6,4 @@ branches:
     only:
         - master
 
-env:
-  global:
-    - REPO="rogatec/zf3-tutorial"
-    - CI_HOME=`pwd`/$REPO
+script: vendor/bin/phpunit --debug
